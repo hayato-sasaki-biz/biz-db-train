@@ -25,18 +25,19 @@ class Section2 {
         // Arrange:
 
         // Act:
-        // language=SQL
         // NOTE whereではandやorで論理的な条件を複数組み合わせることができる
+        // language=SQL
         val results = """
 select 
   MEMBER.*,
   MEMBER_STATUS.*
 from 
-  MEMBER, MEMBER_STATUS
+  MEMBER
+  inner join MEMBER_STATUS
+    on MEMBER.MEMBER_STATUS_CODE = MEMBER_STATUS.MEMBER_STATUS_CODE
 where 
   MEMBER.MEMBER_NAME like 'S%' and 
-  MEMBER.BIRTHDATE <= '1968-01-01' and
-  MEMBER_STATUS.MEMBER_STATUS_CODE = MEMBER.MEMBER_STATUS_CODE
+  MEMBER.BIRTHDATE <= '1968-01-01'
 order by 
   MEMBER.BIRTHDATE asc
         """.fetch()
