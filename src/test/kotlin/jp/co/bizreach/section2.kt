@@ -26,9 +26,19 @@ class Section2 {
 
         // Act:
         // language=SQL
+        // NOTE whereではandやorで論理的な条件を複数組み合わせることができる
         val results = """
-select MEMBER.*
-from MEMBER
+select 
+  MEMBER.*,
+  MEMBER_STATUS.*
+from 
+  MEMBER, MEMBER_STATUS
+where 
+  MEMBER.MEMBER_NAME like 'S%' and 
+  MEMBER.BIRTHDATE <= '1968-01-01' and
+  MEMBER_STATUS.MEMBER_STATUS_CODE = MEMBER.MEMBER_STATUS_CODE
+order by 
+  MEMBER.BIRTHDATE asc
         """.fetch()
 
         // Assert:
