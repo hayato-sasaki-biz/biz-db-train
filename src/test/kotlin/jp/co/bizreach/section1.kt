@@ -84,9 +84,12 @@ where MEMBER.MEMBER_ID = 1
 
         // Act:
         // language=SQL
+        // NOTE NULLの判定のときには"="ではなく"IS"を使う
         val results = """
 select * 
 from MEMBER
+where MEMBER.BIRTHDATE IS NULL
+order by MEMBER.UPDATE_DATETIME desc
         """.fetch()
 
         // Assert:
