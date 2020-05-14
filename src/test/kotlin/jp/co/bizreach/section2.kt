@@ -25,10 +25,21 @@ class Section2 {
         // Arrange:
 
         // Act:
+        // NOTE whereではandやorで論理的な条件を複数組み合わせることができる
         // language=SQL
         val results = """
-select MEMBER.*
-from MEMBER
+select 
+  MEMBER.*,
+  MEMBER_STATUS.*
+from 
+  MEMBER
+  inner join MEMBER_STATUS
+    on MEMBER.MEMBER_STATUS_CODE = MEMBER_STATUS.MEMBER_STATUS_CODE
+where 
+  MEMBER.MEMBER_NAME like 'S%' and 
+  MEMBER.BIRTHDATE <= '1968-01-01'
+order by 
+  MEMBER.BIRTHDATE asc
         """.fetch()
 
         // Assert:
@@ -55,8 +66,16 @@ from MEMBER
         // Act:
         // language=SQL
         val results = """
-select MEMBER.*
-from MEMBER
+select 
+  *
+from 
+  MEMBER 
+  inner join MEMBER_SECURITY
+    on MEMBER.MEMBER_ID = MEMBER_SECURITY.MEMBER_ID
+  inner join MEMBER_STATUS
+    on MEMBER.MEMBER_STATUS_CODE = MEMBER_STATUS.MEMBER_STATUS_CODE
+order by 
+  MEMBER.BIRTHDATE is null, MEMBER.BIRTHDATE desc, MEMBER.MEMBER_ID
         """.fetch()
 
         // Assert:
