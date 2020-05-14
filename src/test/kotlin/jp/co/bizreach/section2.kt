@@ -65,8 +65,16 @@ order by
         // Act:
         // language=SQL
         val results = """
-select MEMBER.*
-from MEMBER
+select 
+  *
+from 
+  MEMBER 
+  left outer join MEMBER_SECURITY
+    on MEMBER.MEMBER_ID = MEMBER_SECURITY.MEMBER_ID
+  left outer join MEMBER_STATUS
+    on MEMBER.MEMBER_STATUS_CODE = MEMBER_STATUS.MEMBER_STATUS_CODE
+order by 
+  MEMBER.BIRTHDATE is null, MEMBER.BIRTHDATE desc, MEMBER.MEMBER_ID
         """.fetch()
 
         // Assert:
