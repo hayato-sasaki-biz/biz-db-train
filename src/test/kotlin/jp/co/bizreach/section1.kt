@@ -27,6 +27,8 @@ class Section1 {
         val results = """
 select *
 from MEMBER
+where MEMBER.MEMBER_NAME like 'S%'
+order by MEMBER.MEMBER_NAME asc
         """.fetch()
 
         // Assert:
@@ -56,6 +58,7 @@ from MEMBER
         val results = """
 select * 
 from MEMBER
+where MEMBER.MEMBER_ID = 1
         """.fetch()
 
         // Assert:
@@ -81,9 +84,12 @@ from MEMBER
 
         // Act:
         // language=SQL
+        // NOTE NULLの判定のときには"="ではなく"IS"を使う
         val results = """
 select * 
 from MEMBER
+where MEMBER.BIRTHDATE IS NULL
+order by MEMBER.UPDATE_DATETIME desc
         """.fetch()
 
         // Assert:
